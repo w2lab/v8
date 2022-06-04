@@ -630,6 +630,7 @@ config("internal_config") {
   if (v8_current_cpu == "riscv64") {
     libs = [ "atomic" ]
   }
+
 }
 
 # Should be applied to all targets that write trace events.
@@ -7077,3 +7078,24 @@ if (!build_with_chromium && v8_use_perfetto) {
     ]
   }
 }  # if (!build_with_chromium && v8_use_perfetto)
+
+v8_component("afl-wasm-compile") {
+  sources = [
+    "src/api/ext-api.cc",
+    "src/api/ext-api.h",
+  ]
+
+  deps = [
+    ":v8_base_without_compiler",
+    ":v8_compiler",
+    ":v8_snapshot",
+    ":lib_wasm_fuzzer_common",
+    ":wasm_compile_fuzzer",
+    ":fuzzer_support"
+  ]
+
+  # public_deps = [ ":v8" ]
+
+  configs = [ ":internal_config" ]
+}
+

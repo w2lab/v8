@@ -2436,10 +2436,9 @@ WasmInitExpr GenerateInitExpr(Zone* zone, WasmModuleBuilder* builder,
 }
 }  // namespace
 
-class WasmCompileFuzzer : public WasmExecutionFuzzer {
-  bool GenerateModule(Isolate* isolate, Zone* zone,
+bool WasmCompileFuzzer::GenerateModule(Isolate* isolate, Zone* zone,
                       base::Vector<const uint8_t> data, ZoneBuffer* buffer,
-                      bool liftoff_as_reference) override {
+                      bool liftoff_as_reference) {
     TestSignatures sigs;
 
     WasmModuleBuilder builder(zone);
@@ -2613,8 +2612,7 @@ class WasmCompileFuzzer : public WasmExecutionFuzzer {
     builder.SetMaxMemorySize(32);
     builder.WriteTo(buffer);
     return true;
-  }
-};
+  };
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   constexpr bool require_valid = true;
