@@ -52,6 +52,14 @@ class WasmExecutionFuzzer {
                               bool liftoff_as_reference) = 0;
 };
 
+class WasmCompileFuzzer : public WasmExecutionFuzzer {
+public:
+  bool GenerateModule(Isolate* isolate, Zone* zone,
+                    base::Vector<const uint8_t> data,
+                    ZoneBuffer* buffer,
+                    bool liftoff_as_reference) override;
+};
+
 }  // namespace fuzzer
 }  // namespace wasm
 }  // namespace internal
